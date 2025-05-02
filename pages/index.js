@@ -6,6 +6,23 @@ export default function Home() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+
+    const email = emailRef.current.value;
+    const feedback = feedbackRef.current.value;
+
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        feedback
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   }
 
   return (
@@ -14,12 +31,13 @@ export default function Home() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" />
+          <input type="email" id="email" ref={emailRef} />
         </div>
         <div>
           <label htmlFor="feedback">Feedback</label>
-          <input type="text" id="feedback" />
+          <textarea id="feedback" ref={feedbackRef} />
         </div>
+        <button type="submit">Share feedback</button>
       </form>
     </>
   );

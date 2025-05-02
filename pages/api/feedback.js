@@ -1,9 +1,10 @@
+import path from 'path';
 import fs, { readFileSync } from 'fs'
 
 export default function feedbackHandler(req, res) {
 
   if (req.method === "POST") {
-    
+
     const { email, feedback } = req.body;
 
     const newFeedback = {
@@ -19,6 +20,7 @@ export default function feedbackHandler(req, res) {
     fs.writeFileSync(filePath, JSON.stringify(data))
     res.status(201).json({
       message: 'Success!',
+      email,
       feedback
     })
 
