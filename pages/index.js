@@ -1,21 +1,16 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Home() {
+  const [feedbackItems, setFeedbackItems] = useState([]);
+
   const emailRef = useRef();
   const feedbackRef = useRef();
 
   function handleSubmit(event) {
     event.preventDefault();
 
-
     const email = emailRef.current.value;
     const feedback = feedbackRef.current.value;
-
-    // const body = {
-    //   email,
-    //   feedback,
-    // };
-    // console.lo
 
     fetch("/api/feedback", {
       method: "POST",
@@ -28,7 +23,13 @@ export default function Home() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => setFeedbackItems(data.feedbacks));
+  }
+
+  function getAllFeedbacks() {
+    fetch("/api/feedback")
+      .then((response) => response.json())
+      .then((data) => setFeedbackItems(data.feedbacks));
   }
 
   return (
@@ -45,6 +46,11 @@ export default function Home() {
         </div>
         <button type="submit">Share feedback</button>
       </form>
+      <hr />
+      <button onClick={getAllFeedbacks}>Get Feedbacks</button>
+      <ul>
+        {feedbackItems.map(({ id, feedback }) => <li key={id}>{feedback}</li>)}
+      </ul>
     </>
   );
 }
