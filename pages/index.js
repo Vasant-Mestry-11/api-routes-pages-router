@@ -49,7 +49,7 @@ export default function Home() {
       <hr />
       <button onClick={getAllFeedbacks}>Get Feedbacks</button>
       <ul>
-        {feedbackItems.map(({ id, feedback }) => <li key={id}>{feedback}</li>)}
+        {feedbackItems?.map(({ id, feedback }) => <li key={id}>{feedback}</li>)}
       </ul>
     </>
   );
