@@ -5,7 +5,7 @@ export default function FeedbackPage({ feedbacks }) {
   const [feedbackItem, setFeedbackItem] = useState()
 
   const viewDetails = (id) => {
-    fetch(`/api/${id}`)
+    fetch(`/api/feedback/${id}`)
       .then(response => response.json())
       .then(data => setFeedbackItem(data.feedback))
   }

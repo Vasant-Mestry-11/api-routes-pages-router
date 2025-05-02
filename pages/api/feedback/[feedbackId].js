@@ -1,4 +1,4 @@
-import { buildFeedbackPath, extractFeedbacks } from "./feedback"
+import { buildFeedbackPath, extractFeedbacks } from "."
 
 
 export default function handler(req, res) {
