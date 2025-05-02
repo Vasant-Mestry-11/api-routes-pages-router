@@ -1,5 +1,15 @@
 import path from 'path';
-import fs, { readFileSync } from 'fs'
+import fs from 'fs'
+
+function buildFeedbackPath() {
+  return path.join(process.cwd(), 'data', 'feedback.json');
+}
+
+function extractFeedbacks(filePath) {
+  const fileData = fs.readFileSync(filePath)
+  const data = JSON.parse(fileData);
+  return data
+}
 
 export default function feedbackHandler(req, res) {
 
@@ -13,9 +23,8 @@ export default function feedbackHandler(req, res) {
       feedback
     }
 
-    const filePath = path.join(process.cwd(), 'data', 'feedback.json');
-    const fileData = fs.readFileSync(filePath)
-    const data = JSON.parse(fileData);
+    const filePath = buildFeedbackPath()
+    const data = extractFeedbacks(filePath)
     data.push(newFeedback)
     fs.writeFileSync(filePath, JSON.stringify(data))
     res.status(201).json({
@@ -24,8 +33,12 @@ export default function feedbackHandler(req, res) {
       feedback
     })
 
+  } else {
+    const filePath = buildFeedbackPath()
+    const data = extractFeedbacks(filePath)
+    res.status(200).send({
+      message: "This works",
+      feedbacks: data
+    })
   }
-  res.status(200).send({
-    message: "This works"
-  })
 }

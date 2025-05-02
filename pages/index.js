@@ -11,6 +11,12 @@ export default function Home() {
     const email = emailRef.current.value;
     const feedback = feedbackRef.current.value;
 
+    // const body = {
+    //   email,
+    //   feedback,
+    // };
+    // console.lo
+
     fetch("/api/feedback", {
       method: "POST",
       headers: {
